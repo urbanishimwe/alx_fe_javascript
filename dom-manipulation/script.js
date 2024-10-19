@@ -24,7 +24,7 @@ async function showRandomQuote() {
     }
 }
 
-async function newQuote() {
+function newQuote() {
     const quote = nextQuote();
     if (!quote) {
         alert('Try to add your own quote');
@@ -43,12 +43,7 @@ async function newQuote() {
     displayedQuotes.push(quote);
 }
 
-document.addEventListener('DOMContentLoaded', showRandomQuote);
-
-document.getElementById('newQuote').addEventListener('click', newQuote);
-
-document.getElementById('addQuoteForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
+function addQuote() {
     const quote = {
         q: document.getElementById('newQuoteText').value,
         c: document.getElementById('newQuoteCategory').value
@@ -56,7 +51,16 @@ document.getElementById('addQuoteForm').addEventListener('submit', async (event)
     presonalQuotes.push(quote);
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
-    await newQuote();
+    newQuote();
+}
+
+document.addEventListener('DOMContentLoaded', showRandomQuote);
+
+document.getElementById('newQuote').addEventListener('click', newQuote);
+
+document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    addQuote();
 });
 
 function nextQuote() {
@@ -74,12 +78,13 @@ function nextQuote() {
 }
 
 
-var forAlex = {
+var forAlex = [{
     'category': 'Quote',
     'text': 'text'
-}
+}];
 
 function displayRandomQuote() {
     const random = document.getElementById('random');
+    const quote = forAlex[Math.random()];
     random.innerHTML = "quotes HTMl";
 }
