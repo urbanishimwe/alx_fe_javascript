@@ -38,7 +38,7 @@ async function fetchQuotesFromServer() {
 }
 
 function syncQuotes() {
-    
+    setInterval(fetchQuotesFromServer, 10000);
 }
 
 function newQuote() {
