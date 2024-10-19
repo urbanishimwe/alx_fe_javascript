@@ -20,6 +20,12 @@ async function fetchQuotesFromServer() {
     }
     try {
         // const notUsingThis = 'https://jsonplaceholder.typicode.com/posts'
+        // fetch(notUsingThis, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
         const resp = await fetch("https://raw.githubusercontent.com/well300/quotes-api/refs/heads/main/quotes.json", { mode: 'cors' });
         (await resp.json()).forEach(element => {
             quotes.push({ q: element.quote, c: mockQuotesCategory, a: element.author });
