@@ -2,8 +2,8 @@ var quotes = [];
 var quotesLoaded = false;
 var quotesIndex = 0;
 
-var presonalQuotes = [];
-var presonalQuotesIndex = 0;
+var personalQuotes = [];
+var personalQuotesIndex = 0;
 
 var displayedQuotes = [];
 
@@ -48,13 +48,17 @@ function createAddQuoteForm() {
         q: document.getElementById('newQuoteText').value,
         c: document.getElementById('newQuoteCategory').value
     };
-    presonalQuotes.push(quote);
+    personalQuotes.push(quote);
+    saveQuotes();
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
     newQuote();
 }
 
-document.addEventListener('DOMContentLoaded', showRandomQuote);
+document.addEventListener('DOMContentLoaded', async() => {
+    personalQuotes = JSON.parse(window.localStorage.getItem('quotes') || '[]');
+    await showRandomQuote();
+});
 
 document.getElementById('newQuote').addEventListener('click', newQuote);
 
@@ -64,9 +68,9 @@ document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
 });
 
 function nextQuote() {
-    if (presonalQuotesIndex < presonalQuotes.length) {
-        const quote = presonalQuotes[presonalQuotesIndex];
-        presonalQuotesIndex++;
+    if (personalQuotesIndex < personalQuotes.length) {
+        const quote = personalQuotes[personalQuotesIndex];
+        personalQuotesIndex++;
         return quote;
     }
 
@@ -77,14 +81,46 @@ function nextQuote() {
     }
 }
 
-
-var forAlex = [{
-    'category': 'Quote',
-    'text': 'text'
-}];
-
-function displayRandomQuote() {
-    const random = document.getElementById('random');
-    const quote = forAlex[Math.random()];
-    random.innerHTML = "quotes HTMl";
+function importFromJsonFile(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function (event) {
+        var importedQuotes;
+        try {
+            importedQuotes = JSON.parse(event.target.result);
+            if(!validateQuotes(importedQuotes)) {
+                throw new Error();
+            }
+            personalQuotes.push(...importedQuotes);
+        } catch(e) {
+            alert('failed to parse quotes file');
+            return;
+        }
+        saveQuotes();
+        alert('Quotes imported successfully!');
+    };
+    fileReader.readAsText(event.target.files[0]);
 }
+
+function saveQuotes() {
+    window.localStorage.setItem('quotes', JSON.stringify(personalQuotes));
+}
+
+function validateQuotes(userQuotes) {
+    if(typeof userQuotes !== 'array') {
+        return false;
+    }
+    return userQuotes.find(e => !(e.q && e.c));
+}
+
+window.sessionStorage.setItem('quotes', 'demonstrating session knowledge');
+
+// var forAlex = [{
+//     'category': 'Quote',
+//     'text': 'text'
+// }];
+
+// function displayRandomQuote() {
+//     const random = document.getElementById('random');
+//     const quote = forAlex[Math.random()];
+//     random.innerHTML = "quotes HTMl";
+// }
