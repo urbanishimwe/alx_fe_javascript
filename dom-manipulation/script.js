@@ -37,9 +37,10 @@ async function fetchQuotesFromServer() {
     }
 }
 
-function syncQuotes() {
-    setInterval(fetchQuotesFromServer, 10000);
-}
+// function syncQuotes() {
+//     setInterval(fetchQuotesFromServer, 10000);
+//     alert('Quotes synced with server!');
+// }
 
 function newQuote() {
     const quote = nextQuote();
