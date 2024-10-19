@@ -146,8 +146,8 @@ function createOption(value, text) {
 }
 
 function filterQuotes() {
-    const opt = document.getElementById('categoryFilter').value;
-    saveSelectedCategory(opt);
+    const selectedCategory = document.getElementById('categoryFilter').value;
+    saveSelectedCategory(selectedCategory);
 
     const quoteDisplay = document.getElementById('quoteDisplay');
     quoteDisplay.innerHTML = '';
