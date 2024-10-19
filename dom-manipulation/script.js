@@ -37,6 +37,9 @@ async function fetchQuotesFromServer() {
     }
 }
 
+function syncQuotes() {
+    
+}
 
 function newQuote() {
     const quote = nextQuote();
