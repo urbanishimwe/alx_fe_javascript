@@ -72,3 +72,9 @@ function nextQuote() {
         return quote;
     }
 }
+
+
+var forAlex = {
+    'category': 'Quote',
+    'text': 'text'
+}
