@@ -43,7 +43,7 @@ function newQuote() {
     displayedQuotes.push(quote);
 }
 
-function addQuote() {
+function createAddQuoteForm() {
     const quote = {
         q: document.getElementById('newQuoteText').value,
         c: document.getElementById('newQuoteCategory').value
@@ -60,7 +60,7 @@ document.getElementById('newQuote').addEventListener('click', newQuote);
 
 document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
     event.preventDefault();
-    addQuote();
+    createAddQuoteForm();
 });
 
 function nextQuote() {
