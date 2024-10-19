@@ -120,7 +120,9 @@ function exportToJsonFile() {
         return;
     }
     const blobText = JSON.stringify(displayedQuotes);
-    const blobQuotes = new Blob([blobText]);
+    const blobQuotes = new Blob([blobText], {
+        type: 'application/json',
+    });
     const url = URL.createObjectURL(blobQuotes);
     const a = document.createElement('a');
     a.href = url;
