@@ -13,7 +13,7 @@ var categories = ['all'];
 
 const mockQuotesCategory = 'Life quotes';
 
-async function showRandomQuote() {
+async function fetchQuotesFromServer() {
     if (quotesLoaded) {
         quotesIndex = (quotesIndex + 1) % quotes.length;
         return quotes[quotesIndex];
@@ -29,6 +29,7 @@ async function showRandomQuote() {
         console.log(e);
     }
 }
+
 
 function newQuote() {
     const quote = nextQuote();
@@ -191,7 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         quotesCategory = 'all';
     }
 
-    await showRandomQuote();
+    await fetchQuotesFromServer();
     populateCategories();
     filterQuotes();
 });
