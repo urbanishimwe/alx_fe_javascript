@@ -1,6 +1,5 @@
 var quotes = [];
 var quotesLoaded = false;
-var quotesIndex = 0;
 
 var personalQuotes = [];
 var personalQuotesIndex = 0;
@@ -19,28 +18,16 @@ async function fetchQuotesFromServer() {
         return quotes[quotesIndex];
     }
     try {
-        // const notUsingThis = 'https://jsonplaceholder.typicode.com/posts'
-        // fetch(notUsingThis, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
         const resp = await fetch("https://raw.githubusercontent.com/well300/quotes-api/refs/heads/main/quotes.json", { mode: 'cors' });
         (await resp.json()).forEach(element => {
-            quotes.push({ q: element.quote, c: mockQuotesCategory, a: element.author });
+            quotes.push({ text: element.quote, category: mockQuotesCategory, a: element.author });
         });
         quotesLoaded = true;
-        quotesIndex = 0;
     } catch (e) {
         console.log(e);
     }
 }
 
-// function syncQuotes() {
-//     setInterval(fetchQuotesFromServer, 10000);
-//     alert('Quotes synced with server!');
-// }
 
 function newQuote() {
     const quote = nextQuote();
@@ -57,8 +44,8 @@ function newQuote() {
 
 function createAddQuoteForm() {
     const quote = {
-        q: document.getElementById('newQuoteText').value,
-        c: document.getElementById('newQuoteCategory').value,
+        text: document.getElementById('newQuoteText').value,
+        category: document.getElementById('newQuoteCategory').value,
         a: 'You',
     };
     personalQuotes.push(quote);
@@ -75,10 +62,8 @@ function nextQuote() {
         return quote;
     }
 
-    if (quotesLoaded && quotesIndex < quotes.length) {
-        const quote = quotes[quotesIndex];
-        quotesIndex++;
-        return quote;
+    if (quotesLoaded) {
+        return quotes[Math.random() % quotes.length];
     }
 }
 
@@ -181,9 +166,9 @@ function saveSelectedCategory(c) {
 function createQuote(quote) {
     const quoteHolder = document.createElement('blockquote');
     const quoteText = document.createElement('p');
-    quoteText.textContent = quote.q;
+    quoteText.textContent = quote.text;
     const quoteCategory = document.createElement('span');
-    quoteCategory.textContent = `${quote.c} by ${quote.a}`;
+    quoteCategory.textContent = `${quote.category} by ${quote.a}`;
     quoteHolder.appendChild(quoteText);
     quoteHolder.appendChild(document.createElement('br'));
     quoteHolder.appendChild(quoteCategory);
@@ -217,15 +202,4 @@ document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
 
 document.getElementById('exportQuotes').addEventListener('click', exportToJsonFile);
 
-// window.sessionStorage.setItem('quotes', 'demonstrating session knowledge');
-
-// var forAlex = [{
-//     'category': 'Quote',
-//     'text': 'text'
-// }];
-
-// function displayRandomQuote() {
-//     const random = document.getElementById('random');
-//     const quote = forAlex[Math.random()];
-//     random.innerHTML = "quotes HTMl";
-// }
+window.sessionStorage.setItem('quotes', 'demonstrating session knowledge');
