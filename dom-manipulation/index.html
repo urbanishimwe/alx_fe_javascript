@@ -9,27 +9,26 @@
 </head>
 
 <body>
-    <main>
-        <section>
-            <h1>Dynamic Quote Generator</h1>
-            <div><button id="newQuote">Show New Quote</button></div>
-            <form id="addQuoteForm">
-                <label for="newQuoteText"> Enter a new quote: </label>
-                <textarea id="newQuoteText" type="text" required minlength="3"> </textarea>
-                <label for="newQuoteCategory"> Enter quote category: </label>
-                <input id="newQuoteCategory" type="text" required minlength="3" />
-                <button type="submit" id="addQuote">Add Quote</button>
-            </form>
-            <div>
-                <label for="importFile"> Import quotes from file:</label>
-                <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
-            </div>
-        </section>
-        <section>
-            <h1> Quotes List </h1>
-            <div id="quoteDisplay"></div>
-        </section>
-    </main>
+    <section class="main">
+        <h1>Dynamic Quote Generator</h1>
+        <div><button id="newQuote">Show New Quote</button></div>
+        <form id="addQuoteForm">
+            <label for="newQuoteText"> Enter a new quote: </label>
+            <textarea id="newQuoteText" type="text" required minlength="3"> </textarea>
+            <label for="newQuoteCategory"> Enter quote category: </label>
+            <input id="newQuoteCategory" type="text" required minlength="3" />
+            <button type="submit" id="addQuote">Add Quote</button>
+        </form>
+        <div> <button id="exportQuotes"> Export Quotes </button> </div>
+        <div>
+            <label for="importFile"> Import quotes from file:</label>
+            <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+        </div>
+    </section>
+    <section>
+        <h1> Quotes List </h1>
+        <div id="quoteDisplay"></div>
+    </section>
 
     <script src="script.js"></script>
 </body>

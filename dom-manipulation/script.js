@@ -55,7 +55,7 @@ function createAddQuoteForm() {
     newQuote();
 }
 
-document.addEventListener('DOMContentLoaded', async() => {
+document.addEventListener('DOMContentLoaded', async () => {
     personalQuotes = JSON.parse(window.localStorage.getItem('quotes') || '[]');
     await showRandomQuote();
 });
@@ -66,6 +66,8 @@ document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
     event.preventDefault();
     createAddQuoteForm();
 });
+
+document.getElementById('exportQuotes').addEventListener('click', exportToJsonFile);
 
 function nextQuote() {
     if (personalQuotesIndex < personalQuotes.length) {
@@ -87,11 +89,11 @@ function importFromJsonFile(event) {
         var importedQuotes;
         try {
             importedQuotes = JSON.parse(event.target.result);
-            if(!validateQuotes(importedQuotes)) {
+            if (notValidQuotes(importedQuotes)) {
                 throw new Error();
             }
             personalQuotes.push(...importedQuotes);
-        } catch(e) {
+        } catch (e) {
             alert('failed to parse quotes file');
             return;
         }
@@ -105,11 +107,26 @@ function saveQuotes() {
     window.localStorage.setItem('quotes', JSON.stringify(personalQuotes));
 }
 
-function validateQuotes(userQuotes) {
-    if(typeof userQuotes !== 'array') {
+function notValidQuotes(userQuotes) {
+    if (!Array.isArray(userQuotes)) {
         return false;
     }
     return userQuotes.find(e => !(e.q && e.c));
+}
+
+function exportToJsonFile() {
+    if (displayedQuotes.length < 1) {
+        alert('no quotes available');
+        return;
+    }
+    const blobText = JSON.stringify(displayedQuotes);
+    const blobQuotes = new Blob([blobText]);
+    const url = URL.createObjectURL(blobQuotes);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'quotes.json';
+    a.click();
+    URL.revokeObjectURL(url);
 }
 
 window.sessionStorage.setItem('quotes', 'demonstrating session knowledge');
