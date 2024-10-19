@@ -78,3 +78,8 @@ var forAlex = {
     'category': 'Quote',
     'text': 'text'
 }
+
+function displayRandomQuote() {
+    const random = document.getElementById('random');
+    random.innerHTML = "quotes HTMl";
+}
